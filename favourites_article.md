@@ -4,6 +4,9 @@ Recently, I've been working on a passion project on my spare time that allows pe
 
 One of the features that I've implemented is the ability for a prospective pet parent to favourite the pets that they're interested in as well as view the total number of times that the pet was favourited.
 
+
+When working on this feature I found that there were resources that  determined how to have a separate favourites page but not one that showed how to show all pets and the favourites.
+
 The end result looked something like this:
 
 [Insert screenshot of index page]
@@ -150,5 +153,34 @@ LEFT JOIN (
 ON pets.id = user_favourites.pet_id
 LEFT JOIN favourites
 ON pets.id = favourites.pet_id
-GROUP BY pets.id, user_favourites.favourited;
+GROUP BY pets.id, user_ favourites.favourited;
 ```
+
+[Insert An explanation]
+
+
+### Render a JSON payload with the result in Rails
+
+The next step is to execute this query in Rails index index action and render the result as JSON for our API endpoint.
+
+```sql
+query = <<-SQL.squish
+          SELECT pets.*, count(favourites.*) AS total_favourites, CASE WHEN user_favourites.favourited THEN TRUE ELSE FALSE END AS favourited from pets
+          LEFT JOIN (
+            SELECT pet_id, CASE WHEN favourites.user_id = #{current_user.id} THEN TRUE ELSE FALSE END as favourited from favourites where user_id=#{current_user.id}
+          ) user_favourites
+          ON pets.id = user_favourites.pet_id
+          LEFT JOIN favourites
+          ON pets.id = favourites.pet_id
+          GROUP BY pets.id, user_favourites.favourited;
+        SQL
+        pets = ActiveRecord::Base.connection.execute(query)
+
+render json: { pets: pets }
+```
+
+`SQL.squish` does
+`ActiveRecord::Base.connection.execute` does
+
+
+And there you have it, a JSON payload to power a page that shows favourites.
