@@ -1,20 +1,18 @@
 ## Introduction
 
-Recently, I've been working on a passion project on my spare time that allows people to find and adopt pets from shelters within their surrounding area.
+Recently, I've been working on a project in my spare time that allows people to find and adopt pets from shelters within their surrounding areas.
 
-One of the features that I've implemented is the ability for a prospective pet parent to favourite the pets that they're interested in as well as view the total number of times that the pet was favourited.
+One of the features that I've implemented is the ability for a prospective pet parent to favourite the pets that they're interested in, as well as view the total number of times that the pet was favourited.
 
+When working on this feature I found that there were resources that showed how to query and display a user's favourites on a single page but not any that showed all the items on one page and highlighted which were favourited by the user, or that showed the number of users that favourited each item.
 
-When working on this feature I found that there were resources that  determined how to have a separate favourites page but not one that showed how to show all pets and the favourites.
-
-The end result looked something like this:
+This is what I mean:
 
 [Insert screenshot of index page]
 
-In order to build this feature, the following needs to be done:
+In order to build this feature, we need to:
 1. Set up a `favourites` table as a relationship between the `user` and the `pet`.
 2. Once the relationship is set up, write SQL to display the data in a JSON format that can be queried via the API.
-3. Finally, I write some JavaScript to display the information.
 
 I'll go through each step in detail below:
 
@@ -24,28 +22,75 @@ In order to implement this feature, my database needs to have two tables in plac
 
 [Insert a user table and pet table model]
 
-I will assume that you have these two tables in place already.
-
-Thereafter, in order to store which pets have been favourited by which users, we need to set up a relationship between the `pet` and `user` table. The relationship can be described as follows:
+In order to store which pets have been favourited by which users, we need to set up a relationship between the `pet` and `user` table. The relationship can be described as follows:
 
 - A **pet** can be favourited by many **users**.
 - A **user** can favourite many **pets**.
 
-In this case a [has-many :through association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association) can be set up between these tables to store the favourites. As per the rails documentation, this association indicates that the declaring model (i.e. the `user`) can be matched with zero or more instances of another model (i.e. the `pet`) by proceeding through a third model (i.e. the `favourites`).
+In this case a [has-many :through association](https://guides.rubyonrails.org/association_basics.html#the-has-many-through-association) can be set up between the two tables to store the favourites. As per the rails documentation, this association indicates that the declaring model (i.e. the `user`) can be matched with zero or more instances of another model (i.e. the `pet`) by proceeding through a third model (i.e. the `favourites`).
 
-Our database flow will look like this:
+Our database flow will now look like this:
 
 [Insert the database flow here]
 
 And the corresponding model:
 
-[Insert model code]
+```
+class Pet < ApplicationRecord
+  has_many :favourites
+  has_many :users, :through => :favourites
+end
+
+class Favourite < ApplicationRecord
+  belongs_to :pet
+  belongs_to :user
+end
+
+class User < ApplicationRecord
+  has_many :favourites
+  has_many :pets, :through => :favourites
+end
+```
 
 And finally, the migration:
 
-[Insert migration code]
+```
+class CreateFavourites < ActiveRecord::Migration[6.0]
+  def change
 
-Once we have this association in place, it will allow us to access the favourite pets of a user:
+    create_table :users do |t|
+      t.string :username
+      t.string :email
+      t.string :password_digest
+
+      t.timestamps
+    end
+
+    create_table :pets do |t|
+      t.string :pet_type
+      t.datetime :dob
+      t.string :gender
+      t.string :image
+      t.string :breed
+      t.string :name
+
+      t.timestamps
+    end
+
+    create_table :favourites do |t|
+      t.belongs_to :user
+      t.belongs_to :pet
+
+      t.timestamps
+    end
+
+  end
+end
+```
+
+We could have used a `has_and_belongs_to_many` association if we really wanted to. However, spending the time to set up  a `has many through` association, provides us with the opportunity to more easily add validations, callbacks and extra attributes on our `join` table (i.e. the Favourite table.
+
+Once we have this association in place, we can access the favourite pets of a user as follows:
 
 ```
 @user = User.find(13)
@@ -61,7 +106,7 @@ The result may look like something like this:
 ]>
 ```
 
-It will also show the users that have favourited a pet:
+We can also easily get the users that have favourited a pet:
 
 ```
 @pet = Pet.first
@@ -80,7 +125,9 @@ The result may look like something like this:
 
 ## Write SQL to display the correct data
 
-Now that we have a relationship set up and we can store the data, we want to show a list of pets on the home page with their attributes and whether or not they were favourited by the currently signed in user.
+Now that we have our relations and persisted data storage in place, we want to expose the data via an API. This means putting some JSON together.
+
+In order to do so, we need to think about what data needs to be shown on the page. We want to show a list of pets on the home page with their attributes and whether or not they were favourited by the currently signed in user.
 
 An example of what we expect the rendered JSON to look like:
 
