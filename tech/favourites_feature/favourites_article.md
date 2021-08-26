@@ -35,7 +35,7 @@ Our database flow will now look like this:
 
 And the corresponding model:
 
-```
+```ruby
 class Pet < ApplicationRecord
   has_many :favourites
   has_many :users, :through => :favourites
@@ -54,7 +54,7 @@ end
 
 And finally, the migration:
 
-```
+```ruby
 class CreateFavourites < ActiveRecord::Migration[6.0]
   def change
 
@@ -91,13 +91,14 @@ We could have used a `has_and_belongs_to_many` association if we really wanted t
 
 Once we have this association in place, we can access the favourite pets of a user as follows:
 
-```
+```ruby
 @user = User.find(13)
 @user.favourites
 ```
 
 The result may look like something like this:
-```
+
+```ruby
 #<ActiveRecord::Associations::CollectionProxy
 [
   #<Favourite id: 25, user_id: 13, pet_id: 11, created_at: "2021-07-25 10:37:47", updated_at: "2021-07-25 10:37:47">,
@@ -107,14 +108,14 @@ The result may look like something like this:
 
 We can also easily get the users that have favourited a pet:
 
-```
+```ruby
 @pet = Pet.first
 @pet.favourites
 ```
 
 The result may look like something like this:
 
-```
+```ruby
 #<ActiveRecord::Associations::CollectionProxy
 [
   #<Favourite id: 21, user_id: 12, pet_id: 11, created_at: "2021-07-14 15:01:26", updated_at: "2021-07-14 15:01:26">,
@@ -122,7 +123,7 @@ The result may look like something like this:
 ]>
 ```
 
-## Writing some SQL to display the correct data
+## Sending the correct data from the server
 
 Now that we have our relations and persisted data storage in place, we want to expose the data via an API. This means putting some JSON together.
 
@@ -130,7 +131,7 @@ In order to do so, we need to think about what data needs to be shown on our pag
 
 An example of what we expect the rendered JSON to look like:
 
-```
+```json
 [
     {
         "id": 11,
@@ -182,12 +183,21 @@ As you can see from the annotations above, we are rendering the standard `pet` d
 - `favourited` which is a boolean that indicates whether the pet was favourited by the current logged in user.
 - `total_favourites` which provides an indication of how many times the pet was favourited across all users.
 
-### Determining which pets were `favourited` by the user
+**How do we determine which pets were `favourited` by the current user?**
 
-In order to determine whether a pet was favourited by the current user, we will need to check if the `favourites` table contains an entry that has the `user_id` of the `current_user` (with for example id 13) and the `pet_id of the associated `pet`.
+Active Record in Rails, helps insulate us from having to use direct SQL queries, however, there are times when we will write complicated JOIN operations that can be more easily implemented in raw SQL.  
 
-The SQL looks like this:
-<!-- maybe we can add a sql variable for current_user -->
+When we write raw SQL in Rails, it's possible to execute the SQL over the currently established connection for the model with:
+
+```ruby
+ActiveRecord::Base.connection.execute(query)
+```
+
+Now that we know we will be using raw SQL, let's chat about how we can get the data that shows us all pets, and determines which were favourited by the current user.
+
+The way that this can be done is for every pet in the `pets` table, we will check if the `favourites` table contains an entry that has the `user_id` of the `current_user` (with for example id 12) and the associated `pet_id`.
+
+`current_user` will be supplied by the Ruby Code in our actual controller.
 
 ```sql
 SELECT pets.*, CASE WHEN favourites.user_id = 12 THEN TRUE ELSE FALSE END AS favourited
@@ -197,14 +207,12 @@ ON pets.id = favourites.pet_id
 AND favourites.user_id = 12
 ```
 
-Let's decompose the  SQL a bit:
+Let's elaborate on the SQL :
 
-- We want records from the `pets` table , and the matching records from the `favourites` table.  
-- The matching records are determined by the ON CLAUSE. In this case we want to join if two conditions are met, i.e. the `pets.id = favourites.pet_id` and AND `favourites.user_id = 12`
-[Insert a diagram https://www.w3schools.com/sql/sql_join_left.asp]
-- We use a left join because we want to returns all rows from the left table (Pets), even if there are no matches in the right table (Favourites).
-- Finally, let's go back to the first line to understand what we want to display in our result. We want to display all thecolumns from the pets table  `SELECT pets.*`
-- We want to return a boolean - `true` or `false` indicating wheter a user is favourited. In order to do so we evaluate if the user_id on the `favourites`  
+- As per the [definition](https://www.w3schools.com/sql/sql_join_left.asp), the **LEFT JOIN** returns all records from the left table (pets), and the matching records from the right table (favourites). A left join also returns all the rows from the left table (Pets), even if there are no matches in the right table (Favourites).
+- The matching condition in this case is determined by the ON clause `pets.id = favourites.pet_id
+AND favourites.user_id = 12`. This statement looks for rows where the pet `id` from the pets table matches a row where the `pet_id` in the favourites table row AND the user `id` in the favourites table row is the id of the current user.
+- Finally, let's go back to the first line to understand what we want to display in our result. We want to display all the columns from the pets table  `SELECT pets.*`, and we want to return a boolean - `true` or `false` indicating whether a user was favourited or not. In order to do so we evaluate if the user_id on the `favourites` is the value of the current user id.
 
 
 ### A result with `total_favourites`
