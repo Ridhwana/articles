@@ -215,6 +215,10 @@ AND favourites.user_id = 12`. This statement looks for rows where the pet `id` f
 - Finally, let's go back to the first line to understand what we want to display in our result. We want to display all the columns from the pets table  `SELECT pets.*`, and we want to return a boolean - `true` or `false` indicating whether a user was favourited or not. In order to do so we evaluate if the user_id on the `favourites` is the value of the current user id.
 
 
+[Let's show the result table]
+
+
+
 ### A result with `total_favourites`
 
 In oder to determine the total number of times that a pet was favourited, we will need to join the favourites table to the pets table by the pet id and count the number of favourites.
