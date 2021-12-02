@@ -1,47 +1,42 @@
 # My experiences as a Lead Engineer - leading a small team at Forem
 
-I recently ( a month ago ) got promoted to a Lead Engineer. This promotion involved officially leading what Forem calls the Admin Experience Team and also being a direct manager for folks on my team.
+I recently ( a month ago ) got promoted to a Lead Engineer. This promotion involved leading what Forem calls the Admin Experience Team at Forem and also being a direct manager to some folks on my team.
 
-I've been informally leading the team for a few months now, and during this time I've experienced the good and the bad. I've overcome some challenges and I'm learning to adapt to my new position. At the end of each week I spend time reflecting on how I spent my time, the value that I've added, the milestones that I've achieved, and the challenges that I've experienced and overcame.
+I've been informally leading the team for a few months now, and during this time I've been exploring how to get better at my role. I've been overcoming some challenges and I'm learning to adapt to my new position. At the end of each week I spend time reflecting on how I've spent my time, the value that I've added, the milestones that I've achieved, and the challenges that I've experienced and overcame.
 
-It occurred to me that whilst I'm reflecting I could document this journey - maybe my learnings could help others on a similar journey or help those hoping to make a move towards a Lead Engineering role.
+It occurred to me that whilst I'm reflecting I could document this journey - perhaps my learnings could help others on a similar journey or help those debating whether to make a move towards a Lead Engineering role.
 
 In this introduction post I'll outline:
-1. My career timeline
+1. What led me to this role
 2. What my team does and our goals
-3. My responsibilities
-4. Who I interact with
-5. What do I want to achieve over time
+3. My responsibilities as a Lead Engineer
+4. What do I want to achieve over time
 
 Thereafter, each subsequent post will be themed around a single reflection.
 
-### My career timeline
-Something something
+### What led me to this role
+
+I've been working in the industry for about 10 years now. I started my career at a corporate where I worked for about 3 years. I then started my a company and consulted for about 4 years. Thereafter, I worked at a startup based in the US, creating products for Africa. It was at this point that I realized that I loved working at startups because I could have direct impact on making a difference to the lives of people through software. I enjoyed the challenges and the contributions I could make towards the growth of products within startups. When I was offered a job at Forem, I jumped at the opportunity because it was so [in line with my interests](https://dev.to/ridhwana/a-new-year-with-a-new-dev-adventure-9en). It's been almost two years since I joined.
+
+I'd never thought of going into a management role. It pains me to say this, but my experiences of being a women in the industry had me constantly needing to prove that have I have "hardcore" IC engineering skills and going into management would have felt like defeat. As I type this out I realize how toxic that way of thinking and I wish that my past experiences did not lead me to that. Also, there weren't women with whom I'd interacted with in leadership roles at the time.
+
+As I progressed in my career, I became more confident in myself and my abilities and overcame the need to constantly prove myself. I still didn't think of being a manager.
+
+As I got assigned a new manager and we chatted through my career growth, we touched on the things that I enjoyed doing. I realized I love working on features and projects and spending time coding. I also enjoy mentoring and helping others with their career growth. I'm also a really organized person with a sense of discipline that can start something and take it to completion. In addition, together my manager and I identified that I have other skillsets that we thought could potentially make me a good leader.
+
+He encouraged me to explore options that I enjoy. It was around that time that I was provided with an opportunity to lead the effort to improve the Admin Experience team which later confirmed for me that I enjoyed part IC Engineering, but I also enjoy management. The two combined have seems to give me a sense of purpose and fulfilment for the moment.
+
+And that is how I landed up with a promotion to a Lead Engineer....
 
 ### What my team does and our goals
-We're a really small team at the moment with just four people including myself. The team consists of a designer and 3 engineers. We have a really good mix of skillsets and experience levels too.
 
-The Admin Experience team is responsible for the creator and admin journey on Forem. We are working on improving the onboarding of creators so that they can set up their Forems more easily. In addition, we have what we call the /admin section that is responsible for Customization, Content Management, Moderator tools, Advanced developer tools, and User management. These tools give power to the creator and admins of Forems so that they are able to effectively setup, manage and grow their Forem. I'm really passionate about the work that I'm doing and feel motivated by the improvements that I can make in this area.
+The Admin Experience team is a really small team at the moment with just four people including myself. The team consists of a designer and 3 engineers. We have a really good mix of skillsets and experience levels.
 
-Here is an **outline of our goals** as a team:
+The team is responsible for the creator and admin journey on Forem. We are working on improving the onboarding for creators so that they can set up their Forems more easily. In addition, we have what we call the `/admin` section that is responsible for Customization, Content Management, Moderator tools, Advanced developer tools, and User management. These tools give power to the creator and admins of Forems so that they are able to effectively setup, manage and grow their Forem. I'm really passionate about the work that I'm doing and feel motivated by the improvements that I can make in this area.
 
-[1] Setup - Help creators set up their incomplete Forem so that:
-- They're proud to share it with others. (emotional)
-- It is set up exactly the way they hope it works. (functional/fits expectations)
-- They plant the seeds with the first few members. (social network)
+The goals of our team are to help improve the Setup, Management and Growth of Forems.
 
-[2] Manage - Help creators manage their Forem so that:
-- It remains safe, inclusive, and secure (trust & safety; security)
-- Everyone finds value in engaging with the community (engagement)
-- Creators & admins understand what's going on behind the scenes (analytics)
-- They can edit and tweak it as they as they go
-
-[3] Grow - Help creators grow their Forem so that:
-- They reap the rewards (sometimes monetary) for their business, organization, or community (monetization)
-
-My management position is a mix of IC management and people management.
-
-### My responsibilities
+### My responsibilities as a Lead Engineer
 
 As a team manager I am responsible for:
 1. Making sure that projects are on track.
@@ -57,13 +52,12 @@ As a people manager, I conduct 1-1 meetings. I am responsible for:
 3. Helping to align their work to their interests.
 4. Providing them with feedback.
 
-### Who do I interact with
+I'll expand on these responsibilities as I continue growing in my role.
 
-Something something
-
+As a Lead Engineer, I interact with Product, Design and Engineers to fit the pieces of a puzzle together in order to bring a feature to life.
 
 ### What do I want to achieve over time
 
-My aim as a Lead Engineer is to make an impact on the people that I work with and to be a supportive manager that enhances my teams career.   
+My aim as a Lead Engineer is to make an impact on the people that I work with as well as the projects that I run. I also aim to be a supportive manager who helps to enhance career growth on my team.   
 
 There may be more responsibilities that I will discover as I walk this journey, and as I grow in this role, I'm keen to document my experiences and my learnings. My reason for doing this is a bit selfish - it's mostly so that I can reflect on my interactions and challenge myself to improve in this role. Maybe you'll join me on this journey? and we could learn a thing or two from each other.
