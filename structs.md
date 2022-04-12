@@ -1,16 +1,11 @@
 # OpenStruct, Introduced
-
-Ruby is a class based object oriented language. What does this mean?
-Objects have behaviour and may contain data. 
-
-
 ## A quick recap on a Ruby Class and an object
 
 What is a Ruby class?
 
 Ruby allows you to define a class which provides a blueprint for the construction of similar objects. Class defines methods (definitions of behaviour) and atttributes (definitions of variables).
 
-Methods will get incoked in response to a message.
+Methods will get invoked in response to a message.
 The same method name can be defined by many fifferent obbjects and its upto Ruby to find the right method of the correct objects for any sent message. 
 
 A class can be used to repeatedly instantiate, or create, new instances of an object. 
@@ -141,7 +136,7 @@ Look into the source code and walk through it.
 
 ## What si an OpenStruct
 
-If you need just a once off object then you should create an OenStruct. ]]
+If you need just a once off object then you should create an OpenStruct. ]]
 
 An Openstruct can be much slower than a Hash , as there is more overhead in the setting of these properties when it craetes objects. YOu can look at this study here that measures the speed. [Insert link here]
 
