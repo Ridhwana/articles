@@ -18,7 +18,6 @@ Every class object like String, Integer is a data-specific instance of the Class
 
 
 
-
 ## An Struct
 
 
